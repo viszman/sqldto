@@ -7,6 +7,7 @@ namespace App\TransferObjects;
 
 class SqlDTO
 {
+//    TODO add functionality to add relation at hoc
     public const REPLACE_TYPE = 'REPLACE INTO';
     public const INSERT_TYPE = 'INSERT INTO';
     public const UPDATE_TYPE = 'UPDATE';
@@ -107,5 +108,14 @@ VALUES
 );";
 
         return $sql;
+    }
+
+    /**
+     * @param string $fieldName
+     * @param string|int       $fieldValue
+     */
+    public function addField(string $fieldName, $fieldValue)
+    {
+        $this->fieldValues[$fieldName] = $fieldValue;
     }
 }
