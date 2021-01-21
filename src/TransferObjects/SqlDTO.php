@@ -41,8 +41,11 @@ class SqlDTO
     ) {
         $this->type = $type;
         $this->dbSchema = $dbSchema;
-        $this->fieldValues = $fieldValues;
+        $this->fieldValues = $this->normalizeWhitespaces($fieldValues);
         $this->related = $related;
+        if ($related) {
+            $this->related = $this->normalizeWhitespaces($related);
+        }
         $this->relatedField = $relatedField;
     }
 
@@ -117,5 +120,14 @@ VALUES
     public function addField(string $fieldName, $fieldValue)
     {
         $this->fieldValues[$fieldName] = $fieldValue;
+    }
+
+    private function normalizeWhitespaces(array $fields)
+    {
+        $normalized = [];
+        foreach ($fields as $key => $field) {
+            $normalized[$key] = trim(preg_replace('/(?:\s{2,}+|[^\S ])/', ' ', $field));
+        }
+        return $normalized;
     }
 }
