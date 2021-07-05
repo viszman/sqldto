@@ -31,13 +31,15 @@ class SqlDTO
      * @var string|null
      */
     private $relatedField;
+    private $additionalRelations;
 
     public function __construct(
         string $type,
         string $dbSchema,
         array $fieldValues,
         ?array $related,
-        ?string $relatedField
+        ?string $relatedField,
+        ?array ...$additionalRelations
     ) {
         $this->type = $type;
         $this->dbSchema = $dbSchema;
@@ -47,6 +49,8 @@ class SqlDTO
             $this->related = $this->normalizeWhitespaces($related);
         }
         $this->relatedField = $relatedField;
+        $this->fieldValues = $fieldValues;
+        $this->additionalRelations = $additionalRelations;
     }
 
     /**
@@ -120,6 +124,22 @@ VALUES
     public function addField(string $fieldName, $fieldValue)
     {
         $this->fieldValues[$fieldName] = $fieldValue;
+    }
+
+    /**
+     * @return array[]
+     */
+    public function getAdditionalRelations(): array
+    {
+        return $this->additionalRelations;
+    }
+
+    /**
+     * @param array[] $additionalRelations
+     */
+    public function setAdditionalRelations(?array $additionalRelations): void
+    {
+        $this->additionalRelations = $additionalRelations;
     }
 
     private function normalizeWhitespaces(array $fields)
