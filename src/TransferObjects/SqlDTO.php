@@ -45,9 +45,6 @@ class SqlDTO
         $this->dbSchema = $dbSchema;
         $this->fieldValues = $this->normalizeWhitespaces($fieldValues);
         $this->related = $related;
-        if ($related) {
-            $this->related = $this->normalizeWhitespaces($related);
-        }
         $this->relatedField = $relatedField;
         $this->fieldValues = $fieldValues;
         $this->additionalRelations = $additionalRelations;
@@ -146,9 +143,6 @@ VALUES
     {
         $normalized = [];
         foreach ($fields as $key => $field) {
-            if (!is_string($field)) {
-                continue;
-            }
             $normalized[$key] = trim(preg_replace('/(?:\s{2,}+|[^\S ])/', ' ', $field));
         }
         return $normalized;
