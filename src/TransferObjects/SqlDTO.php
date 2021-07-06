@@ -146,6 +146,9 @@ VALUES
     {
         $normalized = [];
         foreach ($fields as $key => $field) {
+            if (!is_string($field)) {
+                continue;
+            }
             $normalized[$key] = trim(preg_replace('/(?:\s{2,}+|[^\S ])/', ' ', $field));
         }
         return $normalized;
