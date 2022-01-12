@@ -139,10 +139,13 @@ VALUES
         $this->additionalRelations = $additionalRelations;
     }
 
-    private function normalizeWhitespaces(array $fields)
+    private function normalizeWhitespaces(array $fields): array
     {
         $normalized = [];
         foreach ($fields as $key => $field) {
+            if (!$field) {
+                continue;
+            }
             $normalized[$key] = trim(preg_replace('/(?:\s{2,}+|[^\S ])/', ' ', $field));
         }
         return $normalized;
